@@ -10,6 +10,7 @@
 1. [React testing library 주요 API](#2)
 1. [쿼리 함수에 대해서](#3)
 1. [Jest 에 대한 Eslint 설정](#4)
+1. [TDD (테스트 주도 개발)](#5)
 
 
 
@@ -160,3 +161,26 @@ yarn add eslint-plugin-jest-dom eslint-plugin-testing-library
 * `.eslintrc.json` 의 `extends` 에 `react-app/jest` 가 있다면, 지워줍니다.
     * `react-app/jest` 에 의해 Eslint plugin 이 동작하지 않습니다.
 
+<br />
+
+테스트 코드 작성 시, IDE 의 자동완성 도움을 받기위해 `@types/jest` 를 설치 합니다.
+
+```bash
+yarn add @types/jest
+```
+
+
+
+<br /><hr /><br />
+
+
+
+###### 5
+# 5. TDD (테스트 주도 개발)
+
+테스트 코드를 먼저 작성한 후, 테스트를 통과하는 코드를 작성하는 방식으로 기능을 구현하는 방법론은 `TDD (테스트 주도 개발)` 이라고 합니다.
+
+TDD 를 도입했을 때, 가장 큰 장점은 다음과 같습니다.
+
+* 각 기능별 테스트 코드가 있으므로, 코드의 안정성이 높습니다.
+* 기능 개발을 할 때 디버깅에 많은 시간을 사용하게 되는데, 테스트 코드가 이미 있다면, 해당 테스트 코드를 통해 디버깅이 되므로, 결과적으로 개발 속도를 향상시킬 수 있습니다.
