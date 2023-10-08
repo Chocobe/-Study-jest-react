@@ -254,3 +254,42 @@ test('When the "+" button is preseed, the counter changes to "1"', () => {
 
 
 
+# 7. 권장 Query 우선 순위
+
+`@testing-library` 는 다양한 방법의 Query 함수를 제공 합니다.
+
+어떤 Query 를 사용하여도 원하는 요소(Element) 를 찾을 수 있지만, 실제 사용자가 접근하는 방식과 유사한 방법일수록 권장합니다.
+
+* [Query Priority 공식문서](https://testing-library.com/docs/queries/about#priority)
+
+<br />
+
+Query 의 우선순위는 아래의 방법에 가장 일치하는지에 의해 정해집니다.
+
+* 사용자가 화면에서 실제 요소(Element) 를 인지하는 방법이 가장 권장되는 Query 이다.
+
+<br />
+
+`@testing-library` 공식문서에서 권장하는 Query 우선순위는 다음과 같습니다.
+
+1. 테스크 코드는 실제 사용자 경험과 닮아야 한다.
+    1. `getByRol('button', { name: /submit/i })`
+        * 요소(Element) 의 `Role` 과 `name` 을 사용하므로, 사용자가 실제 요소(Element) 를 인지하는 방식과 가장 유사합니다.
+    2. `getByLabelText(matcher)`
+        * `Form` 요소(Element) 일 때 적합한 Query 입니다.
+    3. `getByPlaceholderText(matcher)`
+        * `Form` 요소(Element) 일 때 적합한 Query 입니다.
+    4. `getByText(matcher)`
+        * 입력 요소(Element) 가 아닌, `<div />`, `<span />` 과 같은 요소(Element) 일 때 적합한 Query 입니다.
+    5. `getByDisplayValue(matcher)`
+        * `Form` 요소의 `currentValue` 를 사용하는 Query 입니다.
+
+2. `ARIA compliant` 선택자를 사용한 Query
+    1. `getByAltText(matcher)`
+        * `alt` 속성을 지원하는 태그일 경우, 사용할 수 있는 Query 입니다.
+    2. `getByTitle(matcher)`
+        * `title` 속성을 지원하는 태그일 경우, 사용할 수 있지만, 실제 화면에 보이는 속성이 아니므로, 권장하지 않습니다.
+
+3. `[data-testid="..."]` 선택자를 사용한 Query
+    1. `getByTestId(matcher)`
+        * 요소의 속성(Attribute) 에 `data-testid` 를 직접 지정학로, 이를 사용하는 Query 이며, 사용자는 알 수 없는 속성이므로 권장하지 않습니다.
