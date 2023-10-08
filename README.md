@@ -184,3 +184,73 @@ TDD 를 도입했을 때, 가장 큰 장점은 다음과 같습니다.
 
 * 각 기능별 테스트 코드가 있으므로, 코드의 안정성이 높습니다.
 * 기능 개발을 할 때 디버깅에 많은 시간을 사용하게 되는데, 테스트 코드가 이미 있다면, 해당 테스트 코드를 통해 디버깅이 되므로, 결과적으로 개발 속도를 향상시킬 수 있습니다.
+
+<br />
+
+TDD 는 아래 과정을 반복하며, 기능을 구현하게 됩니다.
+
+1. 추가할 기능에 대한 테스트 코드 작성
+2. 테스트 코드 실행 => 실패 (실제 기능을 구현한 것이 아니므로, 실패하게 됩니다.)
+3. 테스트 코드가 통과되도록, 실제 기능을 구현합니다.
+
+<br />
+
+컴포넌트 구현에 TDD 를 적용한다면, 아래와 같은 단계를 거치게 됩니다.
+
+1. 구현할 컴포넌트의 컨텐츠(`textContent`) 를 검사하는 테스트 코드를 작성합니다.
+    * 테스트가 통과하도록 컴포넌트 초기 UI 를 구현합니다.
+2. 사용자 인터렉션이 있다면 (예: 버튼), `FiringEvents API` 또는 `@testing-library/user-event` 를 사용하여, 이벤트를 발생시킨 후의 컴포넌트 컨텐츠(`textContent`) 를 검사합니다.
+    * 테스트가 통과하도록 컴포넌트의 인터렉션을 구현합니다.
+
+
+
+<br /><hr /><br />
+
+
+
+###### 6
+# 6. FiringEvents API 를 사용하여, 사용자 인터렉션 테스트하기
+
+버튼과 같은 사용자 인터렉션 요소를 테스트할 수 있습니다.
+
+사용자가 버튼을 클릭했을 때, 해당 컴포넌트의 컨텐츠(`textContent`)가 어떤 값을 가져야 하는지 테스트할 수 있습니다.
+
+예를 들면, 카운터 증가 버튼을 테스트 할 때, `+ 버튼` 클릭 시 증가한 값이 컴포넌트 컨텐츠(`textContent`) 에 반영되었는지 테스트 합니다.
+
+<br />
+
+테스트 코드 상에서는 실제로 버튼을 클릭할 수는 없으므로, `FiringEvents API` 를 사용하여, 컴포넌트에 `click 이벤트` 를 발생시킬 수 있습니다.
+
+공식문서 상에서는 `FiringEvents API` 를 사용하기 보다는, `@testing-library/user-event` 를 사용해야 한다고 합니다.
+
+> Most projects have a few use cases for fireEvent, but the majority of the time you should probably use @testing-library/user-event.
+
+<br />
+
+아래 코드는 counter 컴포넌트의 `+ 버튼` 을 클릭했을 때 테스트 코드 입니다.
+
+```javascript
+import {
+    render,
+    screen,
+    fireEvent,
+} from '@testing-library/react';
+import Counter from './Counter';
+
+test('When the "+" button is preseed, the counter changes to "1"', () => {
+    render(<Counter />);
+
+    const plusButtonElement = screen.getByTestId('plus-button');
+    fireEvent.click(plusButtonElement);
+
+    const counterElement = screen.getByTestId('counter');
+    expect(counterElement).toHaveTextContent('1');
+});
+```
+
+
+
+<br /><hr /><br />
+
+
+
