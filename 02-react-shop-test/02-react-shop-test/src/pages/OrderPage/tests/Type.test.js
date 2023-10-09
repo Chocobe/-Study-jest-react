@@ -10,7 +10,7 @@ import {
     server,
 } from '../../../mocks/server';
 
-describe.only('Type.js 테스트', () => {
+describe('Type.js 테스트', () => {
     test('display product images from server', async () => {
         render(<Type orderType="products" />);
 
@@ -30,7 +30,7 @@ describe.only('Type.js 테스트', () => {
 
     test('when fetching product data, face an error', async () => {
         server.resetHandlers(
-            rest.get('https://localhost:5000/products/', (req, res, ctx) => {
+            rest.get('http://localhost:5001/products/', (req, res, ctx) => {
                 return res(ctx.status(500));
             })
         );
@@ -40,5 +40,13 @@ describe.only('Type.js 테스트', () => {
         const errorBanner = await screen.findByTestId('error-banner');
 
         expect(errorBanner).toHaveTextContent('에러가 발생했습니다.');
+    });
+
+    test('fetch option information from server', async () => {
+        render(<Type orderType="options" />);
+
+        const optionCheckboxes = await screen.findAllByRole('checkbox');
+
+        expect(optionCheckboxes).toHaveLength(2);
     });
 });

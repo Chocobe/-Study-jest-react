@@ -3,7 +3,7 @@ import {
 } from 'msw';
 
 export const handlers = [
-    rest.get('https://localhost:5000/products/', (req, res, ctx) => {
+    rest.get('http://localhost:5001/products/', (req, res, ctx) => {
         return res(
             ctx.json([
                 {
@@ -18,7 +18,7 @@ export const handlers = [
         );
     }),
 
-    rest.get('https://localhost:5000/options/', (req, res, ctx) => {
+    rest.get('http://localhost:5001/options/', (req, res, ctx) => {
         return res(
             ctx.json([
                 {

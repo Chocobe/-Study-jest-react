@@ -23,7 +23,7 @@ function Products(props) {
                 style={{
                     width: '75%',
                 }}
-                src={`http://localhost:5000/${imagePath}`}
+                src={`http://localhost:5001/${imagePath}`}
                 alt={`${name} product`} />
 
             <form 

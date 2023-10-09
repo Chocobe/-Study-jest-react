@@ -6,6 +6,7 @@ import {
     memo,
 } from 'react';
 import Products from './Products';
+import Options from './Options';
 import ErrorBanner from '../../components/ErrorBanner';
 import axios from 'axios';
 
@@ -37,6 +38,8 @@ function Type(props) {
                 ItemComponent = Products;
                 break;
             case 'options':
+                ItemComponent = Options;
+                break;
             default:
                 break;
         }
@@ -55,7 +58,7 @@ function Type(props) {
     const retrieveProducts = useCallback(async () => {
         try {
             const response = await axios.get(
-                `https://localhost:5000/${orderType}/`
+                `http://localhost:5001/${orderType}/`
             );
 
             setItems(response.data);
@@ -78,11 +81,21 @@ function Type(props) {
         );
     }
 
-    return (
-        <div>
+    return (<>
+        <h2>주문 종류</h2>
+
+        <p>하나의 가격</p>
+
+        <p>총 가격:</p>
+
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: orderType === 'options' && 'column',
+            }}>
             {optionItems}
         </div>
-    );
+    </>);
 }
 
 export default memo(Type);
